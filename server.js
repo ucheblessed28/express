@@ -1,25 +1,27 @@
-// Import Express server
+// Import The Express Module
 const express = require('express');
 
-const path = require('path');
-
-// // Import the donenv module
-// const dotenv = require('dotenv');
-
-// // Configure the donenv module
-// dotenv.config();
-
-// Create an express application
+// Create an Express Application
 const app = express();
 
-// Import the body-parser middleware
-const bodyParser = require('body-parser');
+// Import the 'path' Module
+const path = require('path');
+
+// Import the 'dotenv' module to handle environment variables
+const dotenv = require('dotenv');
+
+// Configure the 'dotenv' module to load environment variables from a .env file
+dotenv.config();
+
+// Import the 'body-parser' middleware
+ const bodyParser = require('body-parser');
+
+ // Use the 'body-parser' middleware to parse JSON and URL-encoded data
+ app.use(bodyParser.json());
+ app.use(bodyParser.urlencoded({ extended: true }));    
 
 // Define the port where the server will listen
-const PORT = 3000;
-
-// Use the middleware to parse URL-encoded data (from forms)
-app.use(bodyParser.urlencoded({ extended: true })); 
+ const PORT = 3000;
 
 // Middleware that logs every request details
 app.use((req, res, next) => {
@@ -36,11 +38,6 @@ app.get('/', (req, res) => {
     res.sendFilel(__dirname + '/public/index.html');
 });
 
-// Define another route (for about)
-app.get('/about', (req, res) => {
-    res.send('<h1>Welcome to Express</h1><p>This is the About page.</p>');
-});
-
 // Define a route that throws an error
 app.get('/error', (req, res) => {
     throw new Error('Something went wrong');
@@ -54,15 +51,12 @@ app.use((err, req, res, next) => {
 
 // Middleware to handle 404 errors
 
-// app.use((req, res) => {
-//     res.status(404).send('<h1> 404 - Page Not Found <h1> The page you\'re looking for does not exsit')
-// });
-
 app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'))
-})
-
-//Start Express Server and listen to the defined port
-app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
 });
+
+
+ // Start the server
+ app.listen(PORT, () => {
+     console.log(`Server is running at http://localhost:${PORT}`);
+ });
