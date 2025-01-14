@@ -30,12 +30,16 @@ app.use((req, res, next) => {
 })
 
 // Middleware that serves the static files from the 'public' directory
-app.use(express.static('public')); 
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 
 // Route for the homepage (index.html will be served automatically)
 app.get('/', (req, res) => {
-    res.sendFilel(__dirname + '/public/index.html');
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
+
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname + '/public/about.html'));
 });
 
 // Define a route that throws an error
